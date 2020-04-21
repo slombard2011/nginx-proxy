@@ -10,6 +10,8 @@
 			# {{ .Container.Node.Name }}/{{ .Container.Name }}
 			server {{ .Container.Node.Address.IP }}:{{ .Address.HostPort }};
 		{{/* If there is no swarm node or the port is not published on host, use container's IP:PORT */}}
+		{{ else if Env.VIRTUAL_HOST }}
+			server {{ Env.VIRTUAL_HOST }}:80;
 		{{ else if .Network }}
 			# {{ .Container.Name }}
 			server {{ .Network.IP }}:{{ .Address.Port }};
